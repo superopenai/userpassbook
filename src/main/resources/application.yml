@@ -1,0 +1,49 @@
+logging:
+      file:
+        path: logs
+      level:
+        root: info
+      config: classpath:logback-spring.xml
+
+
+server:
+  port: 12455
+
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.98.178.104:3306/Bahncard?useUnicode=true&autoReconnect=TRUE&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: yYRwL0hsY6VB30guvaLd
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 15
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  kafka:
+    bootstrap-servers: 192.168.124.133:19092,192.168.124.134:19092,192.168.124.135:19092
+    consumer:
+      group-id: bahncard
+      auto-offset-reset: earliest
+      bootstrap-servers: 192.168.124.133:19092,192.168.124.134:19092,192.168.124.135:19092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer:  org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: 192.168.124.133:19092,192.168.124.134:19092,192.168.124.135:19092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+
+    listener:
+      concurrency: 4
+
+mybatis:
+  type-aliases-package: me.superning.luntan.domain
+  mapper-locations: classpath:mapper/*.xml
