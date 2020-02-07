@@ -39,11 +39,8 @@ spring:
       bootstrap-servers: 192.168.124.133:19092,192.168.124.134:19092,192.168.124.135:19092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
-
     listener:
       concurrency: 4
-
 mybatis:
   type-aliases-package: me.superning.luntan.domain
   mapper-locations: classpath:mapper/*.xml
