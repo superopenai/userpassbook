@@ -1,7 +1,11 @@
 package me.superning.userpassbook;
 
+import me.superning.userpassbook.service.HbasePassService;
 import me.superning.userpassbook.utils.HBaseConn;
 import me.superning.userpassbook.utils.Hbaseutil;
+import me.superning.userpassbook.vo.PassTemplate;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
@@ -9,6 +13,7 @@ import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
@@ -16,10 +21,13 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 
 @SpringBootTest
 class UserpassbookApplicationTests {
 
+    @Autowired
+    HbasePassService hbasePassService;
     @Test
     void getConn() throws IOException {
 
@@ -44,21 +52,21 @@ class UserpassbookApplicationTests {
 
 
     }
-    @Test
-    void addfileDetails(){
-        Hbaseutil.createTable("FileTable",new String[]{"fileInfo","saveInfo"});
-
-        Hbaseutil.putRowData("FileTable","fileInfo","row1","name","file1.txt");
-        Hbaseutil.putRowData("FileTable","fileInfo","row1","type","txt");
-        Hbaseutil.putRowData("FileTable","fileInfo","row1","size","1024");
-        Hbaseutil.putRowData("FileTable","saveInfo","row1","author","superning");
-
-        Hbaseutil.putRowData("FileTable","fileInfo","row2","name","file2.png");
-        Hbaseutil.putRowData("FileTable","fileInfo","row2","type","png");
-        Hbaseutil.putRowData("FileTable","fileInfo","row2","size","2048");
-        Hbaseutil.putRowData("FileTable","saveInfo","row2","author","superning");
-
-    }
+//    @Test
+//    void addfileDetails(){
+//        Hbaseutil.createTable("FileTable",new String[]{"fileInfo","saveInfo"});
+//
+//        Hbaseutil.putRowData("FileTable","fileInfo","row1","name","file1.txt");
+//        Hbaseutil.putRowData("FileTable","fileInfo","row1","type","txt");
+//        Hbaseutil.putRowData("FileTable","fileInfo","row1","size","1024");
+//        Hbaseutil.putRowData("FileTable","saveInfo","row1","author","superning");
+//
+//        Hbaseutil.putRowData("FileTable","fileInfo","row2","name","file2.png");
+//        Hbaseutil.putRowData("FileTable","fileInfo","row2","type","png");
+//        Hbaseutil.putRowData("FileTable","fileInfo","row2","size","2048");
+//        Hbaseutil.putRowData("FileTable","saveInfo","row2","author","superning");
+//
+//    }
     @Test
     void getfileDetails(){
         Result result = Hbaseutil.getRowData("FileTable", "row1", "fileInfo", "size");
@@ -88,6 +96,23 @@ class UserpassbookApplicationTests {
         Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes("row1")));
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL, Collections.singletonList(filter));
         Hbaseutil.getscanner("FileTable","row1","row3",filterList);
+
+
+    }
+    @Test
+    void hbasePassService(){
+        PassTemplate passTemplate = new PassTemplate();
+        passTemplate.setMerchantId(1L);
+        passTemplate.setBackground(1);
+        passTemplate.setDesc("测试二号desc");
+        passTemplate.setHasToken(false);
+        passTemplate.setLimit(10000L);
+        passTemplate.setTitle("测试二号title");
+        passTemplate.setSummary("测试二号summary");
+        passTemplate.setStart(new Date());
+        passTemplate.setEnd(DateUtils.addDays(new Date(),7));
+        hbasePassService.dropPassTemplateToHBase(passTemplate);
+
 
 
     }

@@ -1,6 +1,7 @@
 package me.superning.userpassbook.utils;
 
 import com.yammer.metrics.core.Clock;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
@@ -22,6 +23,7 @@ import java.util.List;
  * @Date 2020/2/7 14:33
  * @Created by superning
  */
+@Slf4j
 public class Hbaseutil {
     /**
      * 创建表
@@ -75,10 +77,10 @@ public class Hbaseutil {
      * @param cfName    列族名
      * @param rowKey    唯一标识rowKey
      * @param qualifier 列族的列名
-     * @param data      数据
+     * @param data      数据 string
      * @return
      */
-    public static boolean putRowData(String tableName, String cfName, String rowKey, String qualifier, String data) {
+    public static boolean putRowStringData(String tableName, String cfName, String rowKey, String qualifier, String data) {
         try (Table table = HBaseConn.getTable(tableName)) {
             Put put = new Put(Bytes.toBytes(rowKey));
             put.addColumn(Bytes.toBytes(cfName), Bytes.toBytes(qualifier), Bytes.toBytes(data));
@@ -89,6 +91,28 @@ public class Hbaseutil {
         }
         return true;
     }
+
+    /**
+     * @param tableName 表名
+     * @param cfName    列族名
+     * @param rowKey    唯一标识rowKey
+     * @param qualifier 列族的列名
+     * @param bytes      数据
+     * @return
+     */
+    public static boolean putRowCustomData(String tableName, String cfName, String rowKey, String qualifier,byte[] bytes) {
+        try (Table table = HBaseConn.getTable(tableName)) {
+            Put put = new Put(Bytes.toBytes(rowKey));
+            put.addColumn(Bytes.toBytes(cfName), Bytes.toBytes(qualifier), bytes);
+            table.put(put);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+
 
     /**
      * @param tableName 表名
@@ -149,7 +173,7 @@ public class Hbaseutil {
             Get get = new Get(Bytes.toBytes(rowKey));
             return table.get(get);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("DropPassTemplate ERROR--->[{}]",e.getMessage());
         }
         return null;
     }
