@@ -9,11 +9,12 @@ import java.util.List;
  * @Description TODO
  * @Date 2020/2/8 14:55
  * @Created by superning
-     * @Classname MerchantService*
+ * @Classname MerchantService*
  */
-public interface MerchantService{
+public interface MerchantService {
     /**
      * 通过id获取商户对象
+     *
      * @param id
      * @return {@link Merchant}
      */
@@ -21,6 +22,7 @@ public interface MerchantService{
 
     /**
      * 通过商户名字获取对象
+     *
      * @param name
      * @return {@link Merchant}
      */
@@ -28,6 +30,7 @@ public interface MerchantService{
 
     /**
      * 根据ids 获取一些对象
+     *
      * @param ids
      * @return {@link Merchant}
      */

@@ -17,18 +17,30 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pass {
-    /** 用户id */
+    /**
+     * 用户id
+     */
     private Long userId;
 
-    /** pass表的rowKEY*/
+    /**
+     * pass表的rowKEY
+     */
     private String passRowKey;
 
-    /**Template表的 id*/
+    /**
+     * Template表的 id
+     */
     private String templateId;
-    /** 优惠卷 token 有可能是null */
+    /**
+     * 优惠卷 token 有可能是null
+     */
     private String token;
-    /** 优惠卷领取日期*/
+    /**
+     * 优惠卷领取日期
+     */
     private Date assignedDate;
-    /** 消费日期 */
+    /**
+     * 消费日期
+     */
     private Date conDate;
 }

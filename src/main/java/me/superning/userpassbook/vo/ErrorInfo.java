@@ -16,15 +16,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ErrorInfo<T> {
 
-    /** 错误码 */
+    /**
+     * 错误码
+     */
     public static final Integer ERROR = -1;
-    /** 特定错误码*/
+    /**
+     * 特定错误码
+     */
     public Integer code;
-    /** 错误信息*/
+    /**
+     * 错误信息
+     */
     private String message;
-    /** 请求url*/
+    /**
+     * 请求url
+     */
     private String url;
-    /** 返回数据*/
+    /**
+     * 返回数据
+     */
     private T data;
 
 }

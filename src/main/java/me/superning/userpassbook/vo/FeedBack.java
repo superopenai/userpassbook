@@ -17,23 +17,31 @@ import me.superning.userpassbook.constant.FeedbackType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedBack {
-    /** 用户id */
-    private Long userId;
-    /** passtemplate 的rowKey */
+    /**
+     * 用户id
+     */
+    private String userId;
+    /**
+     * passtemplate 的rowKey
+     */
     private String tempalteId;
-    /** 评论类型*/
+    /**
+     * 评论类型
+     */
     private String type;
-    /** 评论内容 */
+    /**
+     * 评论内容
+     */
     private String comment;
 
-    public boolean vaild(){
+    public boolean vaild() {
         FeedbackType feedbackType = Enums.getIfPresent(
-                FeedbackType.class,this.type.toUpperCase()
+                FeedbackType.class, this.type.toUpperCase()
         ).orNull();
 
 
-        return !(null==feedbackType||null==comment||comment.length()>140);
-        
+        return !(null == feedbackType || null == comment || comment.length() > 140);
+
     }
 
 }

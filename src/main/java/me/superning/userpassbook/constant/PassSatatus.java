@@ -11,9 +11,9 @@ public enum PassSatatus {
     /**
      * 枚举常量
      */
-    UNUSED("未使用的",1),
-    USED("已经使用的",2),
-    ALL("全部领取的",3);
+    UNUSED("未使用的", 1),
+    USED("已经使用的", 2),
+    ALL("全部领取的", 3);
 
     /**
      * 描述信息
@@ -23,6 +23,7 @@ public enum PassSatatus {
      * 信息编码
      */
     private Integer code;
+
     PassSatatus(String msg, Integer code) {
         this.Msg = msg;
         this.code = code;

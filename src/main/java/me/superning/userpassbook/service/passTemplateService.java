@@ -9,9 +9,10 @@ import me.superning.userpassbook.vo.PassTemplate;
  * @Date 2020/2/10 10:19
  * @Created by superning
  */
-public interface HbasePassService {
+public interface passTemplateService {
     /**
      * 将PassTemplate 写入 HBase
+     *
      * @param passTemplate {@link PassTemplate}
      * @return true/false
      */

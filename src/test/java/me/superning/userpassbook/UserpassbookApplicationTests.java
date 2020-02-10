@@ -1,10 +1,9 @@
 package me.superning.userpassbook;
 
-import me.superning.userpassbook.service.HbasePassService;
+import me.superning.userpassbook.service.passTemplateService;
 import me.superning.userpassbook.utils.HBaseConn;
 import me.superning.userpassbook.utils.Hbaseutil;
 import me.superning.userpassbook.vo.PassTemplate;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Result;
@@ -16,10 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
@@ -27,7 +23,7 @@ import java.util.Date;
 class UserpassbookApplicationTests {
 
     @Autowired
-    HbasePassService hbasePassService;
+    passTemplateService passTemplateService;
     @Test
     void getConn() throws IOException {
 
@@ -111,7 +107,7 @@ class UserpassbookApplicationTests {
         passTemplate.setSummary("测试二号summary");
         passTemplate.setStart(new Date());
         passTemplate.setEnd(DateUtils.addDays(new Date(),7));
-        hbasePassService.dropPassTemplateToHBase(passTemplate);
+        passTemplateService.dropPassTemplateToHBase(passTemplate);
 
 
 

@@ -97,10 +97,10 @@ public class Hbaseutil {
      * @param cfName    列族名
      * @param rowKey    唯一标识rowKey
      * @param qualifier 列族的列名
-     * @param bytes      数据
+     * @param bytes     数据
      * @return
      */
-    public static boolean putRowCustomData(String tableName, String cfName, String rowKey, String qualifier,byte[] bytes) {
+    public static boolean putRowCustomData(String tableName, String cfName, String rowKey, String qualifier, byte[] bytes) {
         try (Table table = HBaseConn.getTable(tableName)) {
             Put put = new Put(Bytes.toBytes(rowKey));
             put.addColumn(Bytes.toBytes(cfName), Bytes.toBytes(qualifier), bytes);
@@ -111,7 +111,6 @@ public class Hbaseutil {
         }
         return true;
     }
-
 
 
     /**
@@ -173,13 +172,12 @@ public class Hbaseutil {
             Get get = new Get(Bytes.toBytes(rowKey));
             return table.get(get);
         } catch (IOException e) {
-            log.error("DropPassTemplate ERROR--->[{}]",e.getMessage());
+            log.error("DropPassTemplate ERROR--->[{}]", e.getMessage());
         }
         return null;
     }
 
     /**
-     *
      * @param tableName
      * @param rowKey
      * @param filterList
@@ -197,73 +195,96 @@ public class Hbaseutil {
     }
 
     /**
-     *
      * @param tableName
      * @return
      */
-    public static ResultScanner getscanner(String tableName) {
-        try (Table table = HBaseConn.getTable(tableName)) {
-            Scan scan = new Scan();
-            scan.setCaching(1000);
-            return table.getScanner(scan);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static ResultScanner getscanner(String tableName) throws IOException {
+
+        Table table = HBaseConn.getTable(tableName);
+        Scan scan = new Scan();
+        scan.setCaching(1000);
+        ResultScanner resultScanner = table.getScanner(scan);
+        if (resultScanner != null) {
+            try (resultScanner) {
+                return resultScanner;
+            }
         }
         return null;
     }
 
     /**
-     *
      * @param tableName
      * @param startRowKey
      * @param endRowkey
      * @return
      */
-    public static ResultScanner getscanner(String tableName,String startRowKey, String endRowkey) {
-        try (Table table = HBaseConn.getTable(tableName)) {
-            Scan scan = new Scan();
-            scan.setCaching(1000);
-            scan.setBatch(100);
-            scan.withStartRow(Bytes.toBytes(startRowKey));
-            scan.withStopRow(Bytes.toBytes(endRowkey));
-            return table.getScanner(scan);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static ResultScanner getscanner(String tableName, String startRowKey, String endRowkey) throws IOException {
+        Table table = HBaseConn.getTable(tableName);
+        Scan scan = new Scan();
+        scan.setCaching(1000);
+        scan.setBatch(100);
+        scan.withStartRow(Bytes.toBytes(startRowKey));
+        scan.withStopRow(Bytes.toBytes(endRowkey));
+        ResultScanner scanner = table.getScanner(scan);
+        if (scanner != null) {
+            try (scanner) {
+                return scanner;
+            }
         }
         return null;
     }
 
     /**
-     *
      * @param tableName
      * @param startRowKey
      * @param endRowkey
      * @param filterList
      * @return
      */
-    public static ResultScanner getscanner(String tableName,String startRowKey, String endRowkey,FilterList filterList) {
-        try (Table table = HBaseConn.getTable(tableName)) {
-            Scan scan = new Scan();
-            scan.setCaching(1000);
-            scan.setBatch(100);
-            scan.setFilter(filterList);
-            scan.withStartRow(Bytes.toBytes(startRowKey));
-            scan.withStopRow(Bytes.toBytes(endRowkey));
-            return table.getScanner(scan);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static ResultScanner getscanner(String tableName, String startRowKey, String endRowkey, FilterList filterList) throws IOException {
+        Table table = HBaseConn.getTable(tableName);
+        Scan scan = new Scan();
+        scan.setCaching(1000);
+        scan.setBatch(100);
+        scan.setFilter(filterList);
+        scan.withStartRow(Bytes.toBytes(startRowKey));
+        scan.withStopRow(Bytes.toBytes(endRowkey));
+        ResultScanner scanner = table.getScanner(scan);
+        if (scanner != null) {
+            try (scanner) {
+                return scanner;
+            }
         }
         return null;
     }
 
     /**
-     *
+     * @param tableName
+     * @param filterList
+     * @return
+     */
+    public static ResultScanner getscanner(String tableName, FilterList filterList) throws IOException {
+        Table table = HBaseConn.getTable(tableName);
+        Scan scan = new Scan();
+        scan.setCaching(1000);
+        scan.setBatch(20);
+        scan.setFilter(filterList);
+        ResultScanner scanner = table.getScanner(scan);
+        if (scanner != null) {
+            try (scanner) {
+                return scanner;
+            }
+        }
+        return null;
+
+    }
+
+    /**
      * @param tableName
      * @param rowKey
      * @return
      */
-    public static boolean deleteRow(String tableName,String rowKey)
-    {
+    public static boolean deleteRow(String tableName, String rowKey) {
         try (Table table = HBaseConn.getTable(tableName)) {
             Delete delete = new Delete(Bytes.toBytes(rowKey));
             table.delete(delete);
@@ -274,18 +295,17 @@ public class Hbaseutil {
     }
 
     /**
-     *
      * @param tableName
      * @param cfName
      * @return
      */
-    public static boolean deleteColumnFamily(String tableName,String cfName) {
+    public static boolean deleteColumnFamily(String tableName, String cfName) {
         try {
             HBaseAdmin admin = (HBaseAdmin) HBaseConn.getHbaseConn().getAdmin();
             if (admin.tableExists(tableName)) {
                 return false;
             } else {
-                 admin.deleteColumn(tableName,cfName);
+                admin.deleteColumn(tableName, cfName);
             }
 
         } catch (IOException e) {
@@ -293,8 +313,9 @@ public class Hbaseutil {
         }
         return true;
     }
+
     public static boolean deleteQualifier(String tableName, String rowKey, String cfName, String qualifier) {
-        try (Table table = HBaseConn.getTable(tableName))  {
+        try (Table table = HBaseConn.getTable(tableName)) {
             Delete delete = new Delete(Bytes.toBytes(rowKey));
             delete.addColumn(Bytes.toBytes(cfName), Bytes.toBytes(qualifier));
             table.delete(delete);

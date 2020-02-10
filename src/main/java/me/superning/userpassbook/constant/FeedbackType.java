@@ -11,12 +11,16 @@ public enum FeedbackType {
     /**
      * 枚举常量
      */
-    PASS(1,"针对优惠卷的评论"),
-    APP(2,"针对app的评论");
+    PASS(1, "针对优惠卷的评论"),
+    APP(2, "针对app的评论");
 
-    /** 编码 */
+    /**
+     * 编码
+     */
     private Integer code;
-    /** 描述 */
+    /**
+     * 描述
+     */
     private String msg;
 
     FeedbackType(Integer code, String msg) {

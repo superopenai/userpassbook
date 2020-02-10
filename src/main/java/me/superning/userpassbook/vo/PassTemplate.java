@@ -17,23 +17,41 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PassTemplate {
-    /** 商户id */
+    /**
+     * 商户id
+     */
     private Long merchantId;
-    /** 优惠卷标题 不能重复  */
+    /**
+     * 优惠卷标题 不能重复
+     */
     private String title;
-    /** 优惠卷摘要*/
+    /**
+     * 优惠卷摘要
+     */
     private String summary;
-    /** 优惠卷详细信息*/
+    /**
+     * 优惠卷详细信息
+     */
     private String desc;
-    /** 最大个数限制*/
+    /**
+     * 最大个数限制
+     */
     private Long limit;
-    /** 开始时间*/
+    /**
+     * 开始时间
+     */
     private Date start;
-    /** 结束时间*/
+    /**
+     * 结束时间
+     */
     private Date end;
-    /** 背景颜色代码*/
+    /**
+     * 背景颜色代码
+     */
     private Integer background;
-    /** 优惠券是否有 Token*/
+    /**
+     * 优惠券是否有 Token
+     */
     private Boolean hasToken;
 
 }

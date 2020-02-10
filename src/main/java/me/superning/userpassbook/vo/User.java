@@ -18,18 +18,17 @@ public class User {
     /**
      * 用户id
      */
-    private Long id;
+    private String id;
     /**
-     *用户基本信息
+     * 用户基本信息
      */
     private Personal Personal;
-
 
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Personal{
+    public static class Personal {
         private String name;
         private Integer age;
         private String sex;

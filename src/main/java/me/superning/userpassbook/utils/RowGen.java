@@ -17,20 +17,21 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class RowGen {
     /**
      * 根据提供的Passtemplate 对象生成rowkey
+     *
      * @param passTemplate {@link PassTemplate}
      * @return String RowKey
      */
     public static String genPassTemplate(PassTemplate passTemplate) {
-        String passInfo = String.valueOf(passTemplate.getMerchantId())+"&&"+passTemplate.getTitle();
+        String passInfo = String.valueOf(passTemplate.getMerchantId()) + "&&" + passTemplate.getTitle();
         String rowKey = DigestUtils.md5Hex(passInfo);
-        log.info("GenPassTemplate  RowKey :[{}],[{}]",passInfo,rowKey);
+        log.info("GenPassTemplate  RowKey :[{}],[{}]", passInfo, rowKey);
         return rowKey;
 
     }
 
     public static String genFeedBack(FeedBack feedBack) {
         return new StringBuilder(String.valueOf(feedBack.getUserId())).reverse().toString()
-                +(Long.MAX_VALUE-System.currentTimeMillis());
+                + (Long.MAX_VALUE - System.currentTimeMillis());
     }
 
 
