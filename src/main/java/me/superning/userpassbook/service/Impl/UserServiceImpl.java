@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * @param user {@link User}
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response createUser(User user) {
         //todo 没理解
-        Long increment = redisTemplate.opsForValue().increment(Constants.USE_COUNT_REDIS_KEY, 1);
+        Long increment = stringRedisTemplate.opsForValue().increment(Constants.USE_COUNT_REDIS_KEY, 1);
         String userRowKey = genUserId(increment);
 
         /* 向表插入用户*/

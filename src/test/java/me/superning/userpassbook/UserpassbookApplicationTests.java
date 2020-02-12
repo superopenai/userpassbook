@@ -1,9 +1,12 @@
 package me.superning.userpassbook;
 
+import com.alibaba.fastjson.JSON;
+import me.superning.userpassbook.service.UserService;
 import me.superning.userpassbook.service.passTemplateService;
 import me.superning.userpassbook.utils.HBaseConn;
 import me.superning.userpassbook.utils.Hbaseutil;
 import me.superning.userpassbook.vo.PassTemplate;
+import me.superning.userpassbook.vo.User;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Result;
@@ -24,6 +27,8 @@ class UserpassbookApplicationTests {
 
     @Autowired
     passTemplateService passTemplateService;
+    @Autowired
+    UserService userService;
     @Test
     void getConn() throws IOException {
 
@@ -72,29 +77,7 @@ class UserpassbookApplicationTests {
         }
 
     }
-    @Test
-    void scanfile(){
-        ResultScanner getscanner = Hbaseutil.getscanner("FileTable", "row1", "row3");
 
-        assert getscanner != null;
-        getscanner.forEach(result -> {
-                System.out.println(Bytes.toString(result.getValue(Bytes.toBytes("fileInfo"),Bytes.toBytes("type"))));
-            });
-
-    }
-    @Test
-    void deleteTable(){
-        Hbaseutil.deleteTable("demo");
-
-    }
-    @Test
-    public void fowFilter() {
-        Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes("row1")));
-        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL, Collections.singletonList(filter));
-        Hbaseutil.getscanner("FileTable","row1","row3",filterList);
-
-
-    }
     @Test
     void hbasePassService(){
         PassTemplate passTemplate = new PassTemplate();
@@ -109,6 +92,14 @@ class UserpassbookApplicationTests {
         passTemplate.setEnd(DateUtils.addDays(new Date(),7));
         passTemplateService.dropPassTemplateToHBase(passTemplate);
 
+
+
+    }
+    @Test
+    void testCreateUser() {
+        User user = new User();
+        user.setPersonal(new User.Personal("superning",21,"male","17667429358","china"));
+        System.out.println(JSON.toJSONString(userService.createUser(user)));
 
 
     }

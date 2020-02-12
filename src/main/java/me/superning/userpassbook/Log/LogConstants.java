@@ -26,6 +26,8 @@ public class LogConstants {
         public static final String CREATE_FEEDBACK = "CreateFeedback";
         /* 用户获取评论*/
         public static final String GET_FEEDBACK = "GetFeedBack";
+        /* 创建用户 */
+        public static final String CREATE_USER = "CreateUser";
 
 
 

@@ -18,7 +18,7 @@ public class LogObiect {
     /** 日志动作类型 */
     private String action;
     /** 用户id */
-    private Long userId;
+    private String userId;
     /** 时间戳 */
     private Long timestamp;
     /** 客户端ip */
