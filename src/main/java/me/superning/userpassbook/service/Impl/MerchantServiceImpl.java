@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import me.superning.userpassbook.mapper.MerchantMapper;
 import me.superning.userpassbook.service.MerchantService;
+import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +33,12 @@ public class MerchantServiceImpl implements MerchantService{
     }
 
     @Override
-    public List<Merchant> findByIdPutIn(List<Integer> ids) {
-        return null;
+    public List<Merchant> findByIdPutIn(List<Long> ids) {
+        List<Merchant> merchants = new ArrayList<>();
+        ids.forEach(item->{
+            Merchant merchant = merchantMapper.selectByPrimaryKey(item);
+            merchants.add(merchant);
+        });
+       return merchants;
     }
 }

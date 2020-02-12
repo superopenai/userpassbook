@@ -34,6 +34,6 @@ public interface MerchantService {
      * @param ids
      * @return {@link Merchant}
      */
-    List<Merchant> findByIdPutIn(List<Integer> ids);
+    List<Merchant> findByIdPutIn(List<Long> ids);
 
 }

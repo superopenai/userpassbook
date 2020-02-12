@@ -20,7 +20,7 @@ public class Pass {
     /**
      * 用户id
      */
-    private Long userId;
+    private String userId;
 
     /**
      * pass表的rowKEY

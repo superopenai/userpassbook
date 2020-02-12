@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PassTemplate Token Upload</title>
+</head>
+<body>
+<h1>PassTemplate Token Upload</h1>
+                <!  /token 以后在controller中定义---->
+<form method="post" action="/token" enctype="multipart/form-data">
+    <label>
+        <input type="text" name="MerchantsId"><br><br>
+    </label>
+    <label>
+        <input type="text" name="PasstemplateId"><br><br>
+    </label>
+    <input type="file" name="file"><br><br>
+
+    <input type="submit" value="submit"><br><br>
+
+</form>
+
+</body>
+</html>

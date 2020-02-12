@@ -1,6 +1,5 @@
 package me.superning.userpassbook.utils;
 
-import com.yammer.metrics.core.Clock;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
@@ -8,11 +7,8 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
-import org.apache.kafka.common.protocol.types.Field;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -162,6 +158,7 @@ public class Hbaseutil {
         return null;
     }
 
+
     /**
      * @param tableName
      * @param rowKey
@@ -176,6 +173,7 @@ public class Hbaseutil {
         }
         return null;
     }
+
 
     /**
      * @param tableName
@@ -193,6 +191,31 @@ public class Hbaseutil {
         }
         return null;
     }
+
+
+    /**
+     *
+     * @param tableName
+     * @param getList
+     * @return
+     */
+    public static Result[] getSomeRowData(String tableName,  List<Get> getList) {
+        try (Table table = HBaseConn.getTable(tableName)) {
+            return table.get(getList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * @param tableName
