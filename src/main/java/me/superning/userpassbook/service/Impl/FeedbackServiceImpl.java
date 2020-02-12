@@ -4,14 +4,11 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import me.superning.userpassbook.constant.Constants;
 import me.superning.userpassbook.service.FeedbackService;
-import me.superning.userpassbook.utils.HBaseConn;
 import me.superning.userpassbook.utils.Hbaseutil;
 import me.superning.userpassbook.utils.RowGen;
 import me.superning.userpassbook.vo.FeedBack;
 import me.superning.userpassbook.vo.Response;
-import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.ResultScanner;
-import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @Classname FeedbackServiceImpl
@@ -37,7 +33,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public Response createFeedback(FeedBack feedBack) {
         if (!feedBack.vaild()) {
             log.error("Feedback Error---->[{}]", JSON.toJSONString(feedBack));
-            return Response.failue("Feedback Error");
+            return Response.failure("Feedback Error");
         }
         String feedBackRowKey = RowGen.genFeedBack(feedBack);
         Hbaseutil.putRowStringData(Constants.Feedback.TABLE_NAME, Constants.Feedback.FAMILY_I, feedBackRowKey, Constants.Feedback.COMMENT, feedBack.getComment());
@@ -76,7 +72,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             });
             return new Response(feedBacks);
         }
-        return Response.failue("没有任何反馈");
+        return Response.failure("没有任何反馈");
     }
 
 

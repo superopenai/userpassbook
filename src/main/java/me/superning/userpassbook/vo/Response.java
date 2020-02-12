@@ -46,7 +46,7 @@ public class Response {
     /**
      * 失败响应
      */
-    public static Response failue(String errorMsg) {
+    public static Response failure(String errorMsg) {
         return new Response(-1, errorMsg, null);
     }
 

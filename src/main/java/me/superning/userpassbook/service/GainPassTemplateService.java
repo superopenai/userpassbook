@@ -3,6 +3,9 @@ package me.superning.userpassbook.service;
 import me.superning.userpassbook.vo.GainPassTemplateRequest;
 import me.superning.userpassbook.vo.Response;
 
+import java.io.IOException;
+import java.text.ParseException;
+
 /**
  * @author superning
  * @Classname GainPassTemplateService
@@ -16,6 +19,6 @@ public interface GainPassTemplateService {
      * @param request {@link GainPassTemplateRequest}
      * @return {@link Response}
      */
-    Response gainPassTemplate(GainPassTemplateRequest request);
+    Response gainPassTemplate(GainPassTemplateRequest request) throws ParseException, IOException;
 
 }
