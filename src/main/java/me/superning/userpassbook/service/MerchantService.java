@@ -18,7 +18,7 @@ public interface MerchantService {
      * @param id
      * @return {@link Merchant}
      */
-    Merchant findById(Integer id);
+    Merchant findById(Long id);
 
     /**
      * 通过商户名字获取对象
@@ -36,4 +36,5 @@ public interface MerchantService {
      */
     List<Merchant> findByIdPutIn(List<Long> ids);
 
+    void updateNameInMerchantById(Long id,String newName);
 }

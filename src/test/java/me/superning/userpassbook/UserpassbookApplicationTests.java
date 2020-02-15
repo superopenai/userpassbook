@@ -1,6 +1,8 @@
 package me.superning.userpassbook;
 
 import com.alibaba.fastjson.JSON;
+import me.superning.userpassbook.domain.Merchant;
+import me.superning.userpassbook.service.MerchantService;
 import me.superning.userpassbook.service.UserService;
 import me.superning.userpassbook.service.passTemplateService;
 import me.superning.userpassbook.utils.HBaseConn;
@@ -14,6 +16,7 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.aspectj.lang.annotation.Aspect;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +32,8 @@ class UserpassbookApplicationTests {
     passTemplateService passTemplateService;
     @Autowired
     UserService userService;
+    @Autowired
+    MerchantService merchantService;
     @Test
     void getConn() throws IOException {
 
@@ -102,6 +107,21 @@ class UserpassbookApplicationTests {
         System.out.println(JSON.toJSONString(userService.createUser(user)));
 
 
+    }
+    @Test
+    void readDB(){
+
+        Merchant merchant = merchantService.findById(1L);
+        System.out.println(merchant);
+
+        Merchant merchant2 = merchantService.findByName("测试一号");
+        System.out.println(merchant2);
+
+
+    }
+    @Test
+    void writeDB(){
+        merchantService.updateNameInMerchantById(1L,"新一号");
     }
 
 }

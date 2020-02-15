@@ -23,13 +23,19 @@ public class MerchantServiceImpl implements MerchantService{
     private MerchantMapper merchantMapper;
 
     @Override
-    public Merchant findById(Integer id) {
-        return null;
+    public Merchant findById(Long id) {
+
+        return merchantMapper.selectByPrimaryKey(id);
+
     }
 
     @Override
     public Merchant findByName(String name) {
-        return null;
+
+        Example example = new Example(Merchant.class);
+        example.createCriteria().andEqualTo("name",name);
+        return merchantMapper.selectOneByExample(example);
+
     }
 
     @Override
@@ -41,4 +47,14 @@ public class MerchantServiceImpl implements MerchantService{
         });
        return merchants;
     }
+
+    @Override
+    public void updateNameInMerchantById(Long id, String newName) {
+        Merchant merchant = merchantMapper.selectByPrimaryKey(id);
+        merchant.setName(newName);
+
+        merchantMapper.updateByPrimaryKeySelective(merchant);
+    }
+
+
 }
